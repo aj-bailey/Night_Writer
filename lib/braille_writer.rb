@@ -10,10 +10,16 @@ class BrailleWriter
     @write_path = argv[1]
     @chars = BrailleCharGenerator.create_braille_characters('braille_characters.csv')
 
-    p create_file
+    p translate
+  end
+
+  def translate
+    create_file
+    "Created '#{@write_path}' containing #{File.open(@read_path).read.length} characters"
   end
 
   def create_file
-    "Created '#{@write_path}' containing #{File.open(@read_path).read.length} characters"
+    # require "pry"; binding.pry
+    
   end
 end
