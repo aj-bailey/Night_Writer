@@ -1,6 +1,6 @@
 require_relative "braille_char_generator"
 
-class BrailleWriter < File
+class BrailleWriter
   attr_reader :read_path, 
               :write_path,
               :chars
@@ -14,6 +14,6 @@ class BrailleWriter < File
   end
 
   def create_file
-    "Created '#{@write_path}' containing #{open(@read_path).read.length} characters"
+    "Created '#{@write_path}' containing #{File.open(@read_path).read.length} characters"
   end
 end
