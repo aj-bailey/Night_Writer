@@ -16,4 +16,11 @@ RSpec.describe BrailleWriter do
       expect(braille_writer.write_path).to eq("braille.txt")
     end
   end
+
+  describe '#create_file' do
+    it 'can return string of write file path and number of characters' do
+      expected = "Created 'braille.txt' containing 43 characters"
+      expect(braille_writer.create_file).to eq(expected)
+    end
+  end
 end
