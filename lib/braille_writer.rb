@@ -1,0 +1,3 @@
+class BrailleWriter < File
+  
+end
