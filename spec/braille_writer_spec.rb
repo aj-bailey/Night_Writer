@@ -15,6 +15,10 @@ RSpec.describe BrailleWriter do
     it 'has readable write_path' do
       expect(braille_writer.write_path).to eq("braille.txt")
     end
+
+    it 'has readable chars' do
+      expect(braille_writer.chars).to be_a(Array)
+    end
   end
 
   describe '#create_file' do
