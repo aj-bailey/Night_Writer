@@ -9,17 +9,36 @@ class BrailleWriter
     @read_path = argv[0]
     @write_path = argv[1]
     @chars = BrailleCharGenerator.create_braille_characters('braille_characters.csv')
-
-    p translate
   end
 
   def translate
-    create_file
-    "Created '#{@write_path}' containing #{File.open(@read_path).read.length} characters"
+    write_file(convert_text(read_file))
+    "Created '#{@write_path}' containing #{read_file.length} characters"
   end
 
-  def create_file
-    # require "pry"; binding.pry
+  def read_file
+    File.open(@read_path).read
+  end
+
+
+  def write_file(text)
+    File.open(@write_path, 'w').write(text)
+  end
+
+  def convert_text(text)
+    chars_grouped_by_letter = @chars.group_by(&:letter)
+    braille_text = ""
+    sets_of_40 = text.length / 40
+
+    (sets_of_40 + 1).times do |i|
+      starting_index = i * 40
+      ending_index = (40 * (i + 1)) - 1
+
+      braille_text << text[starting_index..ending_index].split('').map { |letter| chars_grouped_by_letter[letter][0].top_row + " " }.join.concat("\n")
+      braille_text << text[starting_index..ending_index].split('').map { |letter| chars_grouped_by_letter[letter][0].middle_row + " " }.join.concat("\n")
+      braille_text << text[starting_index..ending_index].split('').map { |letter| chars_grouped_by_letter[letter][0].bottom_row + " " }.join.concat("\n\n")
+    end
     
+    braille_text
   end
 end
