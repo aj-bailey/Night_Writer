@@ -40,7 +40,7 @@ class BrailleWriter
       braille_text << validated_text[starting_index..ending_index].chars.map { |letter| chars_grouped_by_letter[letter][0].bottom_row + " " }.join.concat("\n\n")
     end
     
-    braille_text
+    braille_text.chomp.chomp
   end
 
   def invalidate_characters(text)
