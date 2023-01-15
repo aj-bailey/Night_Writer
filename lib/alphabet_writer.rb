@@ -14,6 +14,8 @@ class AlphabetWriter
     number_line_breaks = file.count("\n")
     number_of_characters = (file.length - number_line_breaks) / 9
 
+    write_file(convert_text(file))
+
     "Created '#{@write_path}' containing #{number_of_characters} characters"
   end
 
