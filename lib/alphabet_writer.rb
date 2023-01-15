@@ -31,8 +31,12 @@ class AlphabetWriter
     end.transform_values! { |char| char.first.letter }
 
     validated_text = invalidate_characters(text)
-
-    chars_group_by_braille_letter[validated_text.split("\n")]
+    alphabet_text = ""
+    lines = validated_text.split("\n").map do |line|
+      line.scan(/../)
+    end
+    
+    lines.map.with_index { |line, index| chars_group_by_braille_letter[lines.transpose[index]] }.join    
   end
 
   def invalidate_characters(text)
