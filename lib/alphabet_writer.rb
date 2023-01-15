@@ -16,4 +16,8 @@ class AlphabetWriter
 
     "Created '#{@write_path}' containing #{number_of_characters} characters"
   end
+
+  def read_file
+    File.open(@read_path).read
+  end
 end
