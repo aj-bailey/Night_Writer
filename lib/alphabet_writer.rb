@@ -10,6 +10,10 @@ class AlphabetWriter
   end
 
   def translate
-    "Created '#{@write_path}' containing #{File.read('./spec/fixtures/test_braille_input.txt').length/9} characters"
+    file = File.read('./spec/fixtures/test_braille_input.txt')
+    number_line_breaks = file.count("\n")
+    number_of_characters = (file.length - number_line_breaks) / 9
+
+    "Created '#{@write_path}' containing #{number_of_characters} characters"
   end
 end
