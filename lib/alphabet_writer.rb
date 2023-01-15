@@ -1,14 +1,6 @@
-class AlphabetWriter
-  attr_reader :read_path, 
-              :write_path,
-              :chars
+require_relative 'character_writer'
 
-  def initialize(argv)
-    @read_path = argv[0]
-    @write_path = argv[1]
-    @chars = BrailleCharGenerator.create_braille_characters('braille_characters.csv')
-  end
-
+class AlphabetWriter < CharacterWriter
   def translate
     file = read_file
     number_line_breaks = file.count("\n")
@@ -17,14 +9,6 @@ class AlphabetWriter
     write_file(convert_text(file))
 
     "Created '#{@write_path}' containing #{number_of_characters} characters"
-  end
-
-  def read_file
-    File.open(@read_path).read
-  end
-
-  def write_file(text)
-    File.open(@write_path, 'w').write(text)
   end
 
   def convert_text(text)
