@@ -28,12 +28,11 @@ class AlphabetWriter
   def convert_text(text)
     chars_group_by_braille_letter = @chars.group_by do |char|
       [char.top_row, char.middle_row, char.bottom_row]
-    end
+    end.transform_values! { |char| char.first.letter }
 
-    chars_group_by_braille_letter.transform_values! { |char| char.first.letter }
+    validated_text = invalidate_characters(text)
 
-    text.delete!(" ")
-    chars_group_by_braille_letter[text.split("\n")]
+    chars_group_by_braille_letter[validated_text.split("\n")]
   end
 
   def invalidate_characters(text)
