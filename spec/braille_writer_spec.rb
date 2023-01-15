@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 RSpec.describe BrailleWriter do
-  let(:braille_writer) { BrailleWriter.new(["./spec/fixtures/test_input.txt", "braille.txt"]) }
+  let(:braille_writer) { BrailleWriter.new(["./spec/fixtures/test_input.txt", "./spec/fixtures/test_output.txt"]) }
 
   describe '#initialize' do
     it 'exists' do
@@ -13,7 +13,7 @@ RSpec.describe BrailleWriter do
     end
 
     it 'has readable write_path' do
-      expect(braille_writer.write_path).to eq("braille.txt")
+      expect(braille_writer.write_path).to eq("./spec/fixtures/test_output.txt")
     end
 
     it 'has readable chars' do
@@ -23,7 +23,7 @@ RSpec.describe BrailleWriter do
 
   describe '#translate' do
     it 'can return string of write file path and number of characters' do
-      expected = "Created 'braille.txt' containing 43 characters"
+      expected = "Created './spec/fixtures/test_output.txt' containing 43 characters"
       expect(braille_writer.translate).to eq(expected)
     end
   end
