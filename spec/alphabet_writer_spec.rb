@@ -33,4 +33,10 @@ RSpec.describe AlphabetWriter do
       expect(alphabet_writer.convert_text("0. \n.. \n.. \n\n")).to eq('a')
     end
   end
+
+  describe '#invalidate_characters' do
+    it 'will remove spaces' do
+      expect(alphabet_writer.invalidate_characters("0. ")).to eq("0.")
+    end
+  end
 end
