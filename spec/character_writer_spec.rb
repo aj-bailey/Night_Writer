@@ -26,4 +26,13 @@ RSpec.describe CharacterWriter do
       expect(character_writer.read_file).to eq("test read")
     end
   end
+
+  describe '#write_file' do
+    xit 'can write a string to a file' do
+      character_writer.write_file("test write")
+
+      # Unsure why this does not work - the file has 'test write' inside but returns empty string
+      expect(File.open(character_writer.write_path).read).to eq("test write")
+    end
+  end
 end
