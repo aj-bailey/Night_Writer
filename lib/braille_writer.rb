@@ -1,28 +1,9 @@
-require_relative "braille_char_generator"
+require_relative 'character_writer'
 
-class BrailleWriter
-  attr_reader :read_path, 
-              :write_path,
-              :chars
-
-  def initialize(argv)
-    @read_path = argv[0]
-    @write_path = argv[1]
-    @chars = BrailleCharGenerator.create_braille_characters('braille_characters.csv')
-  end
-
+class BrailleWriter < CharacterWriter
   def translate
     write_file(convert_text(read_file))
     "Created '#{@write_path}' containing #{read_file.length} characters"
-  end
-
-  def read_file
-    File.open(@read_path).read
-  end
-
-
-  def write_file(text)
-    File.open(@write_path, 'w').write(text)
   end
 
   def convert_text(text)
