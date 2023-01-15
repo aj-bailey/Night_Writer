@@ -27,4 +27,10 @@ RSpec.describe AlphabetWriter do
       expect(alphabet_writer.translate).to eq(expected)
     end
   end
+
+  describe '#convert_text' do
+    it 'can convert single braille lowercase letter to alphabetical' do
+      expect(alphabet_writer.convert_text("0. \n.. \n.. \n\n")).to eq('a')
+    end
+  end
 end
