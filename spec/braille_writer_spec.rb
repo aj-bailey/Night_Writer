@@ -54,9 +54,9 @@ RSpec.describe BrailleWriter do
     it 'will remove invalid characters' do
       expect(braille_writer.invalidate_characters("aBc! ")).to eq("ac ")
     end
-    
+
     it 'will replace line breaks with space character' do
-      expect(braille_writer.invalidate_characters("a\nbc")).to eq("abc")
+      expect(braille_writer.invalidate_characters("a\nbc")).to eq("a bc")
     end
   end
 end
