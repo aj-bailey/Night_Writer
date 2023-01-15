@@ -35,8 +35,12 @@ RSpec.describe AlphabetWriter do
   end
 
   describe '#invalidate_characters' do
-    it 'will remove spaces' do
+    it 'can remove spaces' do
       expect(alphabet_writer.invalidate_characters("0. ")).to eq("0.")
+    end
+
+    it 'can replace double line breaks with single line breaks' do
+      expect(alphabet_writer.invalidate_characters("0.\n..\n..\n\n")).to eq("0.\n..\n..\n")
     end
   end
 end
