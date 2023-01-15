@@ -10,7 +10,7 @@ class AlphabetWriter
   end
 
   def translate
-    file = File.read('./spec/fixtures/test_braille_input.txt')
+    file = read_file
     number_line_breaks = file.count("\n")
     number_of_characters = (file.length - number_line_breaks) / 9
 
@@ -31,7 +31,7 @@ class AlphabetWriter
     end.transform_values! { |char| char.first.letter }
 
     validated_text = invalidate_characters(text)
-    alphabet_text = ""
+
     lines = validated_text.split("\n").map do |line|
       line.scan(/../)
     end
