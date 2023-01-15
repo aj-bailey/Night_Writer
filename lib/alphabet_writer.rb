@@ -38,5 +38,7 @@ class AlphabetWriter
 
   def invalidate_characters(text)
     text.delete!(" ")
+    text.gsub!("\n\n", "\n")
+    text
   end
 end
