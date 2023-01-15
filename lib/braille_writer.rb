@@ -44,6 +44,7 @@ class BrailleWriter
   end
 
   def invalidate_characters(text)
+    text.gsub("\n", " ")
     text.chars.reject { |character| !@chars.group_by(&:letter).include?(character) }.join
   end
 end
