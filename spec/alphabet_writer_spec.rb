@@ -36,6 +36,19 @@ RSpec.describe AlphabetWriter do
     it 'can convert multiple braille lowercase letters to alphabetical' do
       expect(alphabet_writer.convert_text("0. 0. 00 \n.. 0. .. \n.. .. .. \n\n")).to eq('abc')
     end
+
+    it 'can wrap alphabetical text after every 40 characters' do
+      text1 = "0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. \n"
+      text2 = ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. \n"
+      text3 = ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. \n\n"
+      text4 = "0. \n.. \n.. "
+      text = text1.concat(text2).concat(text3).concat(text4)
+
+      
+      expected = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\na"
+
+      expect(alphabet_writer.convert_text(text)).to eq(expected)
+    end
   end
 
   describe '#invalidate_characters' do
