@@ -20,4 +20,11 @@ RSpec.describe AlphabetWriter do
       expect(alphabet_writer.chars).to be_a(Array)
     end
   end
+
+  describe '#translate' do
+    it 'can return string of write file path and number of characters' do
+      expected = "Created './spec/fixtures/test_braille_output.txt' containing 43 characters"
+      expect(alphabet_writer.translate).to eq(expected)
+    end
+  end
 end
