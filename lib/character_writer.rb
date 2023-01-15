@@ -14,4 +14,8 @@ class CharacterWriter
   def read_file
     File.open(@read_path).read
   end
+
+  def write_file(text)
+    File.open(@write_path, 'w').write(text)
+  end
 end
