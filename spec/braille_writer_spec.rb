@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 RSpec.describe BrailleWriter do
-  let(:braille_writer) { BrailleWriter.new(["message.txt", "braille.txt"]) }
+  let(:braille_writer) { BrailleWriter.new(["./spec/fixtures/test_input.txt", "braille.txt"]) }
 
   describe '#initialize' do
     it 'exists' do
@@ -9,7 +9,7 @@ RSpec.describe BrailleWriter do
     end
 
     it 'has readable read_path' do
-      expect(braille_writer.read_path).to eq("message.txt")
+      expect(braille_writer.read_path).to eq("./spec/fixtures/test_input.txt")
     end
 
     it 'has readable write_path' do
