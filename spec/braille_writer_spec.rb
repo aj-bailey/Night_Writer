@@ -49,4 +49,10 @@ RSpec.describe BrailleWriter do
       expect(braille_writer.convert_text(text)).to eq(expected)
     end
   end
+
+  describe '#invalidate_characters' do
+    it 'will remove invalid characters' do
+      expect(braille_writer.invalidate_characters("aBc! ")).to eq("ac ")
+    end
+  end
 end
