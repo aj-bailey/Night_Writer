@@ -32,6 +32,10 @@ RSpec.describe AlphabetWriter do
     it 'can convert single braille lowercase letter to alphabetical' do
       expect(alphabet_writer.convert_text("0. \n.. \n.. \n\n")).to eq('a')
     end
+
+    it 'can convert multiple braille lowercase letters to alphabetical' do
+      expect(alphabet_writer.convert_text("0. 0. 00 \n.. 0. .. \n.. .. .. \n\n")).to eq('abc')
+    end
   end
 
   describe '#invalidate_characters' do
