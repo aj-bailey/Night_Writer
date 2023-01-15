@@ -24,4 +24,15 @@ class AlphabetWriter
   def write_file(text)
     File.open(@write_path, 'w').write(text)
   end
+
+  def convert_text(text)
+    chars_group_by_braille_letter = @chars.group_by do |char|
+      [char.top_row, char.middle_row, char.bottom_row]
+    end
+    
+    chars_group_by_braille_letter.transform_values! { |char| char.first.letter }
+
+    text.delete!(" ")
+    chars_group_by_braille_letter[text.split("\n")]
+  end
 end
