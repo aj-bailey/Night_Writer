@@ -1,0 +1,3 @@
+class CharacterWriter
+
+end
