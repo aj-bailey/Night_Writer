@@ -15,16 +15,8 @@ class AlphabetWriter < CharacterWriter
     validated_text = invalidate_characters(text)
     lines_of_braille = lines_of_braille(validated_text)
     sets_of_three_braille_lines = sets_of_three_braille_lines(lines_of_braille)
-    
-    alphabet_text = ""
-    sets_of_three_braille_lines.each do |set_of_three_braille_lines|
-      set_of_three_braille_lines.transpose.each do |braille_character|
-        alphabet_text << braille_char_to_alphabetical(braille_character)
-      end
-      alphabet_text << "\n"
-    end
-    
-    alphabet_text.chomp
+
+    convert_to_alphabetical(sets_of_three_braille_lines)
   end
 
   def invalidate_characters(text)
@@ -47,5 +39,15 @@ class AlphabetWriter < CharacterWriter
 
   def sets_of_three_braille_lines(lines_of_braille)
     lines_of_braille.each_slice(3).to_a
+  end
+
+  def convert_to_alphabetical(sets_of_three_braille_lines)
+    sets_of_three_braille_lines.map do |set_of_three_braille_lines|
+      
+      set_of_three_braille_lines.transpose.map do |braille_character|
+        braille_char_to_alphabetical(braille_character)
+      end.join
+      
+    end.join("\n")
   end
 end
