@@ -7,25 +7,35 @@ class BrailleWriter < CharacterWriter
   end
 
   def convert_text(text)
-    chars_grouped_by_letter = @chars.group_by(&:letter)
     validated_text = invalidate_characters(text)
-    braille_text = ""
-    sets_of_40 = text.length / 40
 
-    (sets_of_40 + 1).times do |i|
-      starting_index = i * 40
-      ending_index = (40 * (i + 1)) - 1
+    lines_of_text = validated_text.scan(/.{1,40}/) 
 
-      braille_text << validated_text[starting_index..ending_index].chars.map { |letter| chars_grouped_by_letter[letter][0].top_row + " " }.join.concat("\n")
-      braille_text << validated_text[starting_index..ending_index].chars.map { |letter| chars_grouped_by_letter[letter][0].middle_row + " " }.join.concat("\n")
-      braille_text << validated_text[starting_index..ending_index].chars.map { |letter| chars_grouped_by_letter[letter][0].bottom_row + " " }.join.concat("\n\n")
-    end
-    
-    braille_text.chomp.chomp
+    lines_of_braille_to_string(lines_of_braille(lines_of_text))
   end
 
   def invalidate_characters(text)
     text.gsub!("\n", " ")
     text.chars.reject { |character| !@chars.group_by(&:letter).include?(character) }.join
+  end
+
+  def lines_of_braille(lines_of_text)
+    lines_of_text.map { |line| line.chars.map { |char| char_to_braille(char) } }
+  end
+
+  def lines_of_braille_to_string(lines_of_braille)
+    lines_of_braille.map do |braille_line|
+      braille_line.transpose.map { |line| line.join(" ")}.join("\n").concat("\n")
+    end.join("\n").chomp
+  end
+
+  def char_to_braille(char)
+    chars_grouped_by_letter = @chars.group_by(&:letter)
+
+    [
+      chars_grouped_by_letter[char][0].top_row, 
+      chars_grouped_by_letter[char][0].middle_row, 
+      chars_grouped_by_letter[char][0].bottom_row
+    ]
   end
 end
