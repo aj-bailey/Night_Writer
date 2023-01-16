@@ -74,4 +74,18 @@ RSpec.describe BrailleWriter do
       expect(braille_writer.lines_of_braille(text)).to eq(expected)
     end
   end
+
+  describe '#lines_of_braille_to_string' do
+    it 'can change lines of braille into a string' do
+      text = [
+               [
+                 ["0.", "..", ".."], 
+                 ["0.", "0.", ".."], 
+                 ["00", "..", ".."]
+               ]
+             ]
+
+      expect(braille_writer.lines_of_braille_to_string(text)).to eq("0. 0. 00\n.. 0. ..\n.. .. ..")
+    end
+  end
 end
