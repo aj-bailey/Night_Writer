@@ -59,4 +59,19 @@ RSpec.describe BrailleWriter do
       expect(braille_writer.invalidate_characters("a\nbc")).to eq("a bc")
     end
   end
+
+  describe '#lines_of_braille' do
+    it 'can change lines of text to lines of braille' do
+      text = ["abc"]
+      expected = [
+                  [
+                    ["0.", "..", ".."], 
+                    ["0.", "0.", ".."], 
+                    ["00", "..", ".."]
+                  ]
+                 ]
+
+      expect(braille_writer.lines_of_braille(text)).to eq(expected)
+    end
+  end
 end
