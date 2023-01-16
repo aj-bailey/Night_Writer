@@ -67,4 +67,16 @@ RSpec.describe AlphabetWriter do
       expect(alphabet_writer.braille_char_to_alphabetical(braille_char)).to eq("t")
     end
   end
+
+  describe '#lines_of_braille' do
+    it 'can create lines of braille from string' do
+      expected = [
+        ["00", "0.", "00"],
+        [".0", ".0", "00"],
+        ["..", "0.", ".."]
+      ]
+
+      expect(alphabet_writer.lines_of_braille("000.00\n.0.000\n..0...")).to eq(expected)
+    end
+  end
 end
