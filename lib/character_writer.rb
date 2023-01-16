@@ -12,10 +12,10 @@ class CharacterWriter
   end
 
   def read_file
-    File.open(@read_path).read
+    File.read(@read_path)
   end
 
   def write_file(text)
-    File.open(@write_path, 'w').write(text)
+    File.write(@write_path, text)
   end
 end
