@@ -60,4 +60,11 @@ RSpec.describe AlphabetWriter do
       expect(alphabet_writer.invalidate_characters("0.\n..\n..\n\n")).to eq("0.\n..\n..\n")
     end
   end
+
+  describe '#braille_char_to_alphabetical' do
+    it 'can change braille character into alphabetical' do
+      braille_char = [".0", "00", "0."]
+      expect(alphabet_writer.braille_char_to_alphabetical(braille_char)).to eq("t")
+    end
+  end
 end
