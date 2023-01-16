@@ -14,11 +14,7 @@ class AlphabetWriter < CharacterWriter
   def convert_text(text)
     validated_text = invalidate_characters(text)
     
-    lines = validated_text.split("\n").map do |line|
-      line.scan(/../)
-    end
-    
-    sets_of_three_braille_lines = lines.each_slice(3).to_a
+    sets_of_three_braille_lines = lines_of_braille(validated_text).each_slice(3).to_a
     
     alphabet_text = ""
     sets_of_three_braille_lines.each do |set_of_three_braille_lines|
@@ -43,5 +39,9 @@ class AlphabetWriter < CharacterWriter
     end.transform_values! { |char| char.first.letter }
 
     chars_group_by_braille_letter[braille_character]
+  end
+
+  def lines_of_braille(text)
+    text.split("\n").map { |line| line.scan(/../) }
   end
 end
