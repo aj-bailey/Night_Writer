@@ -121,4 +121,30 @@ RSpec.describe AlphabetWriter do
       expect(alphabet_writer.sets_of_three_braille_lines(lines_of_braille)).to eq(expected)
     end
   end
+
+  describe '#convert_to_alphabetical' do
+    it 'can convert braille lines to alphabetical' do
+      sets_of_three_braille_lines = [
+        [
+          [".0", "0.", "0.", "..", "00", "0.", ".0", "00", "0.", "..", "0.", "0.", "0.",
+          ".0", "00", "..", "00", "0.", "00", "..", ".0", "0.", "00", "00", ".0", "..",
+          "0.", "0.", "0.", "0.", "..", ".0", "0.", "0.", "..", "0.", "0.", "0.", "00", ".."],
+
+          ["00", "00", ".0", "..", "00", "..", "0.", "..", "..", "..", "0.", "00", ".0",
+          "00", ".0", "..", "0.", ".0", "..", "..", "00", "..", "..", "0.", "0.", "..",
+            ".0", "0.", ".0", "00", "..", "00", "00", ".0", "..", "0.", "..", ".0", ".0", ".."],
+
+          ["0.", "..", "..", "..", "0.", "00", "..", "..", "0.", "..", "..", "0.", "0.",
+          ".0", "0.", "..", "..", "0.", "00", "..", "..", "00", "0.", "0.", "0.", "..",
+            "0.", "00", "..", "0.", "..", "0.", "..", "..", "..", "0.", "..", "00", "00", ".."]
+        ],
+
+        [ ["00", "0.", "00"], [".0", ".0", "00"], ["..", "0.", ".."] ]
+      ]
+
+      expected = "the quick brown fox jumps over the lazy \ndog"
+      
+      expect(alphabet_writer.convert_to_alphabetical(sets_of_three_braille_lines)).to eq(expected)
+    end
+  end
 end
