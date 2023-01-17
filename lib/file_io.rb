@@ -8,7 +8,7 @@ class FileIO
   def initialize(argv)
     @read_path = argv[0]
     @write_path = argv[1]
-    @chars = CharacterGenerator.create_braille_characters('characters.csv')
+    @chars = CharacterGenerator.create_braille_characters('./lib/characters.csv')
   end
 
   def read_file
