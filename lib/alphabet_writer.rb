@@ -11,18 +11,18 @@ class AlphabetWriter < CharacterWriter
     "Created '#{@write_path}' containing #{number_of_characters} characters"
   end
 
-  def convert_text(text)
-    validated_text = invalidate_characters(text)
+  def convert_text(braille_text)
+    validated_text = invalidate_characters(braille_text)
     lines_of_braille = lines_of_braille(validated_text)
     sets_of_three_braille_lines = sets_of_three_braille_lines(lines_of_braille)
 
     convert_to_alphabetical(sets_of_three_braille_lines)
   end
 
-  def invalidate_characters(text)
-    text.delete!(" ")
-    text.gsub!("\n\n", "\n")
-    text
+  def invalidate_characters(braille_text)
+    braille_text.delete!(" ")
+    braille_text.gsub!("\n\n", "\n")
+    braille_text
   end
 
   def braille_char_to_alphabetical(braille_character)
@@ -33,8 +33,8 @@ class AlphabetWriter < CharacterWriter
     chars_group_by_braille_letter[braille_character]
   end
 
-  def lines_of_braille(text)
-    text.split("\n").map { |line| line.scan(/../) }
+  def lines_of_braille(braille_text)
+    braille_text.split("\n").map { |line| line.scan(/../) }
   end
 
   def sets_of_three_braille_lines(lines_of_braille)
