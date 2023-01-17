@@ -3,7 +3,7 @@ require_relative 'character_writer'
 class BrailleWriter < CharacterWriter
   def translate
     write_file(convert_text(read_file))
-    "Created '#{@write_path}' containing #{read_file.length} characters"
+    "Created '#{@write_path}' containing #{invalidate_characters(read_file).length} characters"
   end
 
   def convert_text(alphabetical_text)
