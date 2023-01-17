@@ -20,7 +20,7 @@ class NightWriter < FileIO
   end
 
   def lines_of_braille(lines_of_text)
-    x = lines_of_text.map do |line| 
+    lines_of_braille = lines_of_text.map do |line| 
       indices_of_uppercase_letters = []
 
       lines_of_braille = line.chars.map.with_index do |char, index|
@@ -34,6 +34,8 @@ class NightWriter < FileIO
 
       insert_uppercase_braille_placeholders(indices_of_uppercase_letters, lines_of_braille)
     end
+
+    adjust_line_lengths(lines_of_braille)
   end
 
   def lines_of_braille_to_string(lines_of_braille)
@@ -60,6 +62,22 @@ class NightWriter < FileIO
       index_offset_counter += 1
     end
 
+    lines_of_braille
+  end
+
+  def adjust_line_lengths(lines_of_braille)
+    # require"pry";binding.pry
+    lines_of_braille.each_with_index do |line, index|
+      excess_chars = line.length - 40
+      next_line = lines_of_braille[(index + 1)]
+      
+      if excess_chars > 0 && next_line != nil
+        excess_chars.times { lines_of_braille[(index + 1)].unshift(line.pop) } 
+      elsif excess_chars > 0
+        lines_of_braille[(index + 1)] = []
+        excess_chars.times { lines_of_braille[(index + 1)].unshift(line.pop) }
+      end
+    end
     lines_of_braille
   end
 end
