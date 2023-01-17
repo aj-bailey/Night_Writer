@@ -6,17 +6,17 @@ class BrailleWriter < CharacterWriter
     "Created '#{@write_path}' containing #{read_file.length} characters"
   end
 
-  def convert_text(text)
-    validated_text = invalidate_characters(text)
+  def convert_text(alphabetical_text)
+    validated_text = invalidate_characters(alphabetical_text)
 
     lines_of_text = validated_text.scan(/.{1,40}/) 
 
     lines_of_braille_to_string(lines_of_braille(lines_of_text))
   end
 
-  def invalidate_characters(text)
-    text.gsub!("\n", " ")
-    text.chars.reject { |character| !@chars.group_by(&:letter).include?(character) }.join
+  def invalidate_characters(alphabetical_text)
+    alphabetical_text.gsub!("\n", " ")
+    alphabetical_text.chars.reject { |character| !@chars.group_by(&:letter).include?(character) }.join
   end
 
   def lines_of_braille(lines_of_text)
