@@ -32,13 +32,7 @@ class BrailleWriter < CharacterWriter
         end
       end
 
-      counter = 0
-      indices_of_uppercase_letters.each do |index|
-        lines_of_braille.insert((index + counter), char_to_braille("uppercase"))
-        counter += 1
-      end
-
-      lines_of_braille
+      insert_uppercase_braille_placeholders(indices_of_uppercase_letters, lines_of_braille)
     end
   end
 
@@ -56,5 +50,16 @@ class BrailleWriter < CharacterWriter
       chars_grouped_by_letter[char][0].middle_row, 
       chars_grouped_by_letter[char][0].bottom_row
     ]
+  end
+
+  def insert_uppercase_braille_placeholders(indices, lines_of_braille)
+    index_offset_counter = 0
+
+    indices.each do |index|
+      lines_of_braille.insert((index + index_offset_counter), char_to_braille("uppercase"))
+      index_offset_counter += 1
+    end
+
+    lines_of_braille
   end
 end
