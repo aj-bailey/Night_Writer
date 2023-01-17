@@ -52,7 +52,7 @@ RSpec.describe BrailleWriter do
 
   describe '#invalidate_characters' do
     it 'will remove invalid characters' do
-      expect(braille_writer.invalidate_characters("aBc! ")).to eq("ac ")
+      expect(braille_writer.invalidate_characters("abc! ")).to eq("abc ")
     end
 
     it 'will replace line breaks with space character' do
@@ -62,10 +62,11 @@ RSpec.describe BrailleWriter do
 
   describe '#lines_of_braille' do
     it 'can change lines of text to lines of braille' do
-      text = ["abc"]
+      text = ["aBc"]
       expected = [
                   [
                     ["0.", "..", ".."], 
+                    ["..", "..", ".0"],
                     ["0.", "0.", ".."], 
                     ["00", "..", ".."]
                   ]
@@ -92,6 +93,28 @@ RSpec.describe BrailleWriter do
   describe '#char_to_braille' do
     it 'can change alphabetical character to braille character' do
       expect(braille_writer.char_to_braille("a")).to eq(["0.", "..", ".."])
+    end
+  end
+
+  describe '#insert_uppercase_braille_placeholders' do
+    it 'can insert braille uppercase into each index' do
+      lines_of_braille = [
+        ["0.", "..", ".."], ["..", "..", ".."], 
+        ["0.", "..", ".."], ["..", "..", ".."], 
+        ["0.", "..", ".."], ["..", "..", ".."], 
+        ["0.", "..", ".."]
+      ]
+
+      indices = [0, 2, 4, 6]
+      
+      expected = [
+        ["..", "..", ".0"], ["0.", "..", ".."], ["..", "..", ".."],
+        ["..", "..", ".0"], ["0.", "..", ".."], ["..", "..", ".."],
+        ["..", "..", ".0"], ["0.", "..", ".."], ["..", "..", ".."],
+        ["..", "..", ".0"], ["0.", "..", ".."]
+      ]
+      
+      expect(braille_writer.insert_uppercase_braille_placeholders(indices, lines_of_braille)).to eq(expected)
     end
   end
 end

@@ -146,5 +146,11 @@ RSpec.describe AlphabetWriter do
       
       expect(alphabet_writer.convert_to_alphabetical(sets_of_three_braille_lines)).to eq(expected)
     end
+
+    it 'can convert braille uppercase letters to uppercase alphabetical' do
+      sets_of_three_braille_lines = [[["..", "0."], ["..", ".."], [".0", ".."]]]
+
+      expect(alphabet_writer.convert_to_alphabetical(sets_of_three_braille_lines)).to eq("A")
+    end
   end
 end
