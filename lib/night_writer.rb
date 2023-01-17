@@ -66,7 +66,6 @@ class NightWriter < FileIO
   end
 
   def adjust_line_lengths(lines_of_braille)
-    # require"pry";binding.pry
     lines_of_braille.each_with_index do |line, index|
       excess_chars = line.length - 40
       next_line = lines_of_braille[(index + 1)]
