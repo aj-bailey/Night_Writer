@@ -95,4 +95,26 @@ RSpec.describe BrailleWriter do
       expect(braille_writer.char_to_braille("a")).to eq(["0.", "..", ".."])
     end
   end
+
+  describe '#insert_uppercase_braille_placeholders' do
+    it 'can insert braille uppercase into each index' do
+      lines_of_braille = [
+        ["0.", "..", ".."], ["..", "..", ".."], 
+        ["0.", "..", ".."], ["..", "..", ".."], 
+        ["0.", "..", ".."], ["..", "..", ".."], 
+        ["0.", "..", ".."]
+      ]
+
+      indices = [0, 2, 4, 6]
+      
+      expected = [
+        ["..", "..", ".0"], ["0.", "..", ".."], ["..", "..", ".."],
+        ["..", "..", ".0"], ["0.", "..", ".."], ["..", "..", ".."],
+        ["..", "..", ".0"], ["0.", "..", ".."], ["..", "..", ".."],
+        ["..", "..", ".0"], ["0.", "..", ".."]
+      ]
+      
+      expect(braille_writer.insert_uppercase_braille_placeholders(indices, lines_of_braille)).to eq(expected)
+    end
+  end
 end
