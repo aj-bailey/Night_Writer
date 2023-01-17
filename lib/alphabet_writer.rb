@@ -42,12 +42,21 @@ class AlphabetWriter < CharacterWriter
   end
 
   def convert_to_alphabetical(sets_of_three_braille_lines)
-    sets_of_three_braille_lines.map do |set_of_three_braille_lines|
-      
+    uppercase_placeholder = false
+
+    sets_of_three_braille_lines.map do |set_of_three_braille_lines| 
       set_of_three_braille_lines.transpose.map do |braille_character|
-        braille_char_to_alphabetical(braille_character)
-      end.join
-      
+        if braille_char_to_alphabetical(braille_character) == "uppercase"
+          uppercase_placeholder = true
+        else
+          if uppercase_placeholder
+            uppercase_placeholder = false
+            braille_char_to_alphabetical(braille_character).upcase
+          else
+            braille_char_to_alphabetical(braille_character)
+          end
+        end
+      end.join.gsub("true","")  
     end.join("\n")
   end
 end
