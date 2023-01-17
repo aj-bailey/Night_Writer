@@ -1,40 +1,40 @@
 require_relative 'spec_helper'
 
-RSpec.describe BrailleWriter do
-  let(:braille_writer) { BrailleWriter.new(["./spec/fixtures/test_input.txt", "./spec/fixtures/test_output.txt"]) }
+RSpec.describe NightWriter do
+  let(:night_writer) { NightWriter.new(["./spec/fixtures/test_input.txt", "./spec/fixtures/test_output.txt"]) }
 
   describe '#initialize' do
     it 'exists' do
-      expect(braille_writer).to be_a(BrailleWriter)
+      expect(night_writer).to be_a(NightWriter)
     end
 
     it 'has readable read_path' do
-      expect(braille_writer.read_path).to eq("./spec/fixtures/test_input.txt")
+      expect(night_writer.read_path).to eq("./spec/fixtures/test_input.txt")
     end
 
     it 'has readable write_path' do
-      expect(braille_writer.write_path).to eq("./spec/fixtures/test_output.txt")
+      expect(night_writer.write_path).to eq("./spec/fixtures/test_output.txt")
     end
 
     it 'has readable chars' do
-      expect(braille_writer.chars).to be_a(Array)
+      expect(night_writer.chars).to be_a(Array)
     end
   end
 
   describe '#translate' do
     it 'can return string of write file path and number of characters' do
       expected = "Created './spec/fixtures/test_output.txt' containing 43 characters"
-      expect(braille_writer.translate).to eq(expected)
+      expect(night_writer.translate).to eq(expected)
     end
   end
 
   describe '#convert_text' do
     it 'can convert single alphabetical lowercase letter to braille' do
-      expect(braille_writer.convert_text('a')).to eq("0.\n..\n..")
+      expect(night_writer.convert_text('a')).to eq("0.\n..\n..")
     end
 
     it 'can convert multiple alphabetical lowercase letters to braille' do
-      expect(braille_writer.convert_text('abc')).to eq("0. 0. 00\n.. 0. ..\n.. .. ..")
+      expect(night_writer.convert_text('abc')).to eq("0. 0. 00\n.. 0. ..\n.. .. ..")
     end
 
     it 'can wrap braille text after every 40 characters' do
@@ -46,17 +46,17 @@ RSpec.describe BrailleWriter do
       expected4 = "0.\n..\n.."
       expected = expected1.concat(expected2).concat(expected3).concat(expected4)
     
-      expect(braille_writer.convert_text(text)).to eq(expected)
+      expect(night_writer.convert_text(text)).to eq(expected)
     end
   end
 
   describe '#invalidate_characters' do
-    it 'will remove invalid characters' do
-      expect(braille_writer.invalidate_characters("abc! ")).to eq("abc ")
+    it 'can remove invalid characters' do
+      expect(night_writer.invalidate_characters("abc! ")).to eq("abc ")
     end
 
-    it 'will replace line breaks with space character' do
-      expect(braille_writer.invalidate_characters("a\nbc")).to eq("a bc")
+    it 'can remove line breaks' do
+      expect(night_writer.invalidate_characters("a\nbc")).to eq("abc")
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe BrailleWriter do
                   ]
                  ]
 
-      expect(braille_writer.lines_of_braille(text)).to eq(expected)
+      expect(night_writer.lines_of_braille(text)).to eq(expected)
     end
   end
 
@@ -86,13 +86,13 @@ RSpec.describe BrailleWriter do
                ]
              ]
 
-      expect(braille_writer.lines_of_braille_to_string(text)).to eq("0. 0. 00\n.. 0. ..\n.. .. ..")
+      expect(night_writer.lines_of_braille_to_string(text)).to eq("0. 0. 00\n.. 0. ..\n.. .. ..")
     end
   end
 
   describe '#char_to_braille' do
     it 'can change alphabetical character to braille character' do
-      expect(braille_writer.char_to_braille("a")).to eq(["0.", "..", ".."])
+      expect(night_writer.char_to_braille("a")).to eq(["0.", "..", ".."])
     end
   end
 
@@ -114,7 +114,64 @@ RSpec.describe BrailleWriter do
         ["..", "..", ".0"], ["0.", "..", ".."]
       ]
       
-      expect(braille_writer.insert_uppercase_braille_placeholders(indices, lines_of_braille)).to eq(expected)
+      expect(night_writer.insert_uppercase_braille_placeholders(indices, lines_of_braille)).to eq(expected)
+    end
+  end
+
+  describe '#adjust_line_lengths' do
+    it 'can pop characters in excess of 40 into new array' do
+      lines = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a"
+        ]
+      ]
+
+      expected = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a"
+        ],
+        [
+          "a"
+        ]
+      ]
+
+      expect(night_writer.adjust_line_lengths(lines)).to eq(expected)
+    end
+
+    it 'can pop characters in excess of 40 into next array' do
+      lines = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a"
+        ],
+        [
+          "a"
+        ]
+      ]
+
+      expected = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a"
+        ],
+        [
+          "a","a"
+        ]
+      ]
+
+      expect(night_writer.adjust_line_lengths(lines)).to eq(expected)
     end
   end
 end

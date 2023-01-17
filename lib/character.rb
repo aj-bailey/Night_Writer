@@ -1,4 +1,4 @@
-class BrailleChar
+class Character
   attr_reader :letter,
               :top_row,
               :middle_row,

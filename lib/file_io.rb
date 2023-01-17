@@ -1,6 +1,6 @@
-require_relative "braille_char_generator"
+require_relative "character_generator"
 
-class CharacterWriter
+class FileIO
   attr_reader :read_path,
               :write_path,
               :chars
@@ -8,7 +8,7 @@ class CharacterWriter
   def initialize(argv)
     @read_path = argv[0]
     @write_path = argv[1]
-    @chars = BrailleCharGenerator.create_braille_characters('braille_characters.csv')
+    @chars = CharacterGenerator.create_braille_characters('./lib/characters.csv')
   end
 
   def read_file
