@@ -1,14 +1,14 @@
 require 'csv'
-require_relative 'braille_char'
+require_relative 'character'
 
-class BrailleCharGenerator
+class CharacterGenerator
   def self.create_braille_characters(path)
-    braille_chars = []
+    characters = []
 
     CSV.foreach(path, headers: true, header_converters: :symbol ) do |info|
-      braille_chars << BrailleChar.new(info)
+      characters << Character.new(info)
     end
 
-    braille_chars
+    characters
   end
 end
