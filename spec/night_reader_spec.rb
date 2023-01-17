@@ -142,7 +142,7 @@ RSpec.describe NightReader do
         [ ["00", "0.", "00"], [".0", ".0", "00"], ["..", "0.", ".."] ]
       ]
 
-      expected = "the quick brown fox jumps over the lazy \ndog"
+      expected = "the quick brown fox jumps over the lazy dog"
       
       expect(night_reader.convert_to_alphabetical(sets_of_three_braille_lines)).to eq(expected)
     end
@@ -151,6 +151,15 @@ RSpec.describe NightReader do
       sets_of_three_braille_lines = [[["..", "0."], ["..", ".."], [".0", ".."]]]
 
       expect(night_reader.convert_to_alphabetical(sets_of_three_braille_lines)).to eq("A")
+    end
+  end
+
+  describe '#add_line_breaks' do
+    it 'can add line breaks every 40 characters' do
+      alphabetical_text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      expected = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\na"
+
+      expect(night_reader.add_line_breaks(alphabetical_text)).to eq(expected)
     end
   end
 end
