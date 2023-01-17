@@ -15,12 +15,12 @@ class NightWriter < FileIO
   end
 
   def invalidate_characters(alphabetical_text)
-    alphabetical_text.gsub!("\n", " ")
+    alphabetical_text.gsub!("\n", "")
     alphabetical_text.chars.reject { |character| !@chars.group_by(&:letter).include?(character) }.join
   end
 
   def lines_of_braille(lines_of_text)
-    lines_of_text.map do |line| 
+    x = lines_of_text.map do |line| 
       indices_of_uppercase_letters = []
 
       lines_of_braille = line.chars.map.with_index do |char, index|
