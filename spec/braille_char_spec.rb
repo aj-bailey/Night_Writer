@@ -1,4 +1,4 @@
-require "braille_char"
+require_relative 'spec_helper'
 
 RSpec.describe BrailleChar do
   let(:braille_char) { BrailleChar.new({letter: "a", top_row: "0.", middle_row: "..", bottom_row: ".."})}
