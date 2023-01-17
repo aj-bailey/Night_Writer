@@ -119,7 +119,7 @@ RSpec.describe NightWriter do
   end
 
   describe '#adjust_line_lengths' do
-    it 'can pop characters in excess of 40 into the next array' do
+    it 'can pop characters in excess of 40 into new array' do
       lines = [
         [
           "a","a","a","a","a","a","a","a","a","a",
@@ -139,6 +139,35 @@ RSpec.describe NightWriter do
         ],
         [
           "a"
+        ]
+      ]
+
+      expect(night_writer.adjust_line_lengths(lines)).to eq(expected)
+    end
+
+    it 'can pop characters in excess of 40 into next array' do
+      lines = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a"
+        ],
+        [
+          "a"
+        ]
+      ]
+
+      expected = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a"
+        ],
+        [
+          "a","a"
         ]
       ]
 
