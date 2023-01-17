@@ -2,11 +2,11 @@ require_relative 'file_io'
 
 class NightReader < FileIO
   def translate
-    file = read_file
-    number_line_breaks = file.count("\n")
-    number_of_characters = (file.length - number_line_breaks) / 9
+    write_file(convert_text(read_file))
 
-    write_file(convert_text(file))
+    output_file = File.read(@write_path)
+    number_line_breaks = output_file.count("\n")
+    number_of_characters = output_file.length - number_line_breaks
 
     "Created '#{@write_path}' containing #{number_of_characters} characters"
   end
