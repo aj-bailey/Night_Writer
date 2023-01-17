@@ -52,7 +52,7 @@ RSpec.describe BrailleWriter do
 
   describe '#invalidate_characters' do
     it 'will remove invalid characters' do
-      expect(braille_writer.invalidate_characters("aBc! ")).to eq("ac ")
+      expect(braille_writer.invalidate_characters("abc! ")).to eq("abc ")
     end
 
     it 'will replace line breaks with space character' do
@@ -62,10 +62,11 @@ RSpec.describe BrailleWriter do
 
   describe '#lines_of_braille' do
     it 'can change lines of text to lines of braille' do
-      text = ["abc"]
+      text = ["aBc"]
       expected = [
                   [
                     ["0.", "..", ".."], 
+                    ["..", "..", ".0"],
                     ["0.", "0.", ".."], 
                     ["00", "..", ".."]
                   ]

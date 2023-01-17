@@ -20,7 +20,26 @@ class BrailleWriter < CharacterWriter
   end
 
   def lines_of_braille(lines_of_text)
-    lines_of_text.map { |line| line.chars.map { |char| char_to_braille(char) } }
+    lines_of_text.map do |line| 
+      indices_of_uppercase_letters = []
+
+      lines_of_braille = line.chars.map.with_index do |char, index|
+        if char.upcase == char && char != " "
+          indices_of_uppercase_letters << index
+          char_to_braille(char)
+        else
+          char_to_braille(char) 
+        end
+      end
+
+      counter = 0
+      indices_of_uppercase_letters.each do |index|
+        lines_of_braille.insert((index + counter), char_to_braille("uppercase"))
+        counter += 1
+      end
+
+      lines_of_braille
+    end
   end
 
   def lines_of_braille_to_string(lines_of_braille)
