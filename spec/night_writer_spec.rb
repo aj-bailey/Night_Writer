@@ -51,12 +51,12 @@ RSpec.describe NightWriter do
   end
 
   describe '#invalidate_characters' do
-    it 'will remove invalid characters' do
+    it 'can remove invalid characters' do
       expect(night_writer.invalidate_characters("abc! ")).to eq("abc ")
     end
 
-    it 'will replace line breaks with space character' do
-      expect(night_writer.invalidate_characters("a\nbc")).to eq("a bc")
+    it 'can remove line breaks' do
+      expect(night_writer.invalidate_characters("a\nbc")).to eq("abc")
     end
   end
 
@@ -115,6 +115,34 @@ RSpec.describe NightWriter do
       ]
       
       expect(night_writer.insert_uppercase_braille_placeholders(indices, lines_of_braille)).to eq(expected)
+    end
+  end
+
+  describe '#adjust_line_lengths' do
+    it 'can pop characters in excess of 40 into the next array' do
+      lines = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a"
+        ]
+      ]
+
+      expected = [
+        [
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a",
+          "a","a","a","a","a","a","a","a","a","a"
+        ],
+        [
+          "a"
+        ]
+      ]
+
+      expect(night_writer.adjust_line_lengths(lines)).to eq(expected)
     end
   end
 end
